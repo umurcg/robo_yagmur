@@ -37,7 +37,7 @@ try:
             # If the new command differs from the previous one, send it to Arduino
             if command != prev_command:
                 ser.write(command.encode())
-                print(f"Sent command: {command}")
+                print(f"Sent command: {command} value: {normalized_value}")
                 prev_command = command
 
 except KeyboardInterrupt:
