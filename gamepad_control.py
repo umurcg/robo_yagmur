@@ -10,9 +10,8 @@ gamepad = InputDevice('/dev/input/event2')
 # Initial command to 'Stop'
 prev_command = 'S'
 
-# Threshold values
-THRESHOLD_MIN = 115  # Adjust as needed
-THRESHOLD_MAX = 140  # Adjust as needed
+# Threshold value (normalized)
+THRESHOLD = 0.2  # Adjust as needed. Values will be between 0 (center) and 1 (edge).
 
 try:
     print("Listening for gamepad input...")
@@ -20,21 +19,19 @@ try:
         # If a joystick move event occurs
         if event.type == ecodes.EV_ABS:
 
+            normalized_value = event.value / 255.0  # Assuming joystick values range from 0 to 255
+
             # Joystick left and right (X-axis)
             if event.code == ecodes.ABS_X:
-                if event.value < THRESHOLD_MIN:  # Left
+                if normalized_value < THRESHOLD:  # Left
                     command = 'L'
-                elif event.value > THRESHOLD_MAX:  # Right
-                    command = 'R'
                 else:
                     command = 'S'
             
             # Joystick up and down (Y-axis)
             elif event.code == ecodes.ABS_Y:
-                if event.value < THRESHOLD_MIN:  # Up/Forward
+                if normalized_value < THRESHOLD:  # Up/Forward
                     command = 'F'
-                elif event.value > THRESHOLD_MAX:  # Down/Backward
-                    command = 'B'
                 else:
                     command = 'S'
 
