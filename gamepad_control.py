@@ -16,6 +16,9 @@ THRESHOLD = 0.2  # Adjust as needed. Values will be between 0 (center) and 1 (ed
 try:
     print("Listening for gamepad input...")
     for event in gamepad.read_loop():
+        # Initialize command to 'Stop' at the start of each iteration
+        command = 'S'
+        
         # If a joystick move event occurs
         if event.type == ecodes.EV_ABS:
 
@@ -25,15 +28,11 @@ try:
             if event.code == ecodes.ABS_X:
                 if normalized_value < THRESHOLD:  # Left
                     command = 'L'
-                else:
-                    command = 'S'
             
             # Joystick up and down (Y-axis)
             elif event.code == ecodes.ABS_Y:
                 if normalized_value < THRESHOLD:  # Up/Forward
                     command = 'F'
-                else:
-                    command = 'S'
 
             # If the new command differs from the previous one, send it to Arduino
             if command != prev_command:
