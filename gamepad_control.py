@@ -5,7 +5,7 @@ from evdev import InputDevice, categorize, ecodes
 ser = serial.Serial('/dev/ttyUSB0', 9600)
 
 # Set up the gamepad device
-gamepad = InputDevice('/dev/input/eventX')  # Replace X with the correct number for the DualSense.
+gamepad = InputDevice('/dev/input/event2')  # Replace X with the correct number for the DualSense.
 
 # A mapping of gamepad keys to commands for the robot
 key_map = {
